@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Category{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background-color: #fdf9f5;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .form-wrapper {
+        max-width: 500px;
+        margin: 60px auto;
+        background: #fff;
+        padding: 40px 35px;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 24px;
+        color: #7a8661;
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+
+    form {
+        text-align: left;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        font-size: 14px;
+        display: block;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 14px;
+        background-color: #f9f7f3;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 90px;
+    }
+
+    .btn-submit {
+        background-color: #7a8661;
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        padding: 12px 40px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    .btn-submit:hover {
+        background-color: #b79b7f;
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #7a8661;
+        text-decoration: none;
+    }
+
+    .btn-back:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="form-wrapper">
+    <h1>Create New Category</h1>
+
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <button class="btn-submit">Save</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_category_index') }}" class="btn-back">← Back to list</a>
+</div>
+{% endblock %}

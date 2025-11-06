@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}View Category - Skincare Admin{% endblock %}
+
+{% block body %}
+<style>
+    .card {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        padding: 30px 40px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color: #7a8661;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .category-info {
+        margin: 20px 0;
+    }
+
+    .category-info strong {
+        color: #7a8661;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 30px;
+    }
+
+    .btn {
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 500;
+        color: #fff;
+        transition: background 0.3s;
+    }
+
+    .btn-edit { background: #7a8661; }
+    .btn-edit:hover { background: #65714f; }
+
+    .btn-back { background: #b79b7f; }
+    .btn-back:hover { background: #a4886b; }
+
+    .btn-delete { background: #c76c6c; }
+    .btn-delete:hover { background: #a34f4f; }
+</style>
+
+<div class="card">
+    <h1>Category Details</h1>
+
+    <div class="category-info">
+        <p><strong>ID:</strong> {{ category.id }}</p>
+        <p><strong>Name:</strong> {{ category.name }}</p>
+        <p><strong>Description:</strong> {{ category.description }}</p>
+    </div>
+
+    <div class="btn-group">
+        <a href="{{ path('app_category_index') }}" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back</a>
+        <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-edit"><i class="fas fa-edit"></i> Edit</a>
+        <form method="post" action="{{ path('app_category_delete', {'id': category.id}) }}" onsubmit="return confirm('Are you sure?');" style="display:inline;">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+            <button class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

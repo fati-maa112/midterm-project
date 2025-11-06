@@ -1,0 +1,110 @@
+{% extends 'base_login.html.twig' %}
+
+{% block title %}Edit Stock{% endblock %}
+
+{% block body %}
+<style>
+    body { background: #fdf9f7; font-family: 'Poppins', sans-serif; color: #333; }
+
+    .form-container {
+        max-width: 600px;
+        margin: 60px auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 { text-align: center; font-size: 2rem; color: #7a8661; margin-bottom: 30px; }
+
+    .current-image { text-align: center; margin-bottom: 20px; }
+    .current-image img {
+        max-width: 200px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    label { font-weight: 600; color: #555; font-size: 0.9rem; margin-bottom: 6px; display: block; }
+
+    input, select {
+        width: 100%; padding: 12px; border-radius: 12px;
+        border: 1px solid #ddd; background: #faf7f0;
+        font-size: 1rem; transition: 0.3s;
+    }
+
+    input:focus, select:focus {
+        border-color: #b79b7f; outline: none; background: #fff;
+        box-shadow: 0 0 0 3px rgba(183,155,127,0.2);
+    }
+
+    /* ✅ Custom File Upload Styling */
+    .custom-file {
+        background: #faf7f0;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+    }
+
+    .custom-file input[type="file"] {
+        border: none;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    .custom-file input[type="file"]::-webkit-file-upload-button {
+        background: #7a8661;
+        color: #fff;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .custom-file input[type="file"]::-webkit-file-upload-button:hover {
+        background: #5f6c4c;
+    }
+
+    button {
+        width: 100%; padding: 14px; border-radius: 30px; border: none;
+        background: #7a8661; color: #fff; font-size: 1rem;
+        font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px;
+    }
+
+    button:hover { background: #5f6c4c; }
+
+    .back-link {
+        display: block; text-align: center; margin-top: 20px;
+        color: #b79b7f; font-weight: 600; text-decoration: none;
+    }
+
+    .back-link:hover { color: #a98867; }
+</style>
+
+<div class="form-container">
+    <h1>Edit Stock</h1>
+
+    {{ form_start(form, { 'attr': { 'enctype': 'multipart/form-data' } }) }}
+
+        {% if stock.image %}
+            <div class="current-image">
+                <p>Current Image:</p>
+                <img src="{{ asset('uploads/' ~ stock.image) }}" alt="{{ stock.product.name }}">
+            </div>
+        {% endif %}
+
+        {{ form_row(form.product) }}
+        {{ form_row(form.quantity) }}
+
+        <label>Upload New Image (optional)</label>
+        <div class="custom-file">
+            {{ form_widget(form.image) }}
+        </div>
+
+        <button type="submit">Update</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_stock_index') }}" class="back-link">← Back to Stocks</a>
+</div>
+{% endblock %}

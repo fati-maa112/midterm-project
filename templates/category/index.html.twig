@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories - Naturae Admin{% endblock %}
+{% block page_title %}Categories{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    /* Content */
+    .content { padding: 20px; }
+
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .content-header h2 {
+        color: var(--color-olive);
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    /* Add Button (same as stock index) */
+    .btn-add {
+        background: var(--color-olive);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .btn-add i {
+        font-size: 14px;
+    }
+    .btn-add:hover {
+        background: var(--color-sand);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .table thead {
+        background: var(--color-olive);
+        color: #fff;
+    }
+    .table th, .table td {
+        padding: 12px 15px;
+        text-align: center;
+        font-size: 14px;
+        border-bottom: 1px solid #ddd;
+    }
+    .table tbody tr:hover {
+        background: #f9f9f9;
+    }
+
+    /* Action buttons */
+    .btn-view, .btn-edit, .btn-delete {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+        margin: 0 3px;
+        cursor: pointer;
+        border-radius: 8px;
+        border: none;
+        transition: 0.2s;
+    }
+    .btn-view {
+        background-color: #6B7755;
+        color: #fff;
+    }
+    .btn-view:hover {
+        background-color: #556042;
+    }
+    .btn-edit {
+        background-color: #C2B280;
+        color: #6B7755;
+    }
+    .btn-edit:hover {
+        background-color: #a9986c;
+    }
+    .btn-delete {
+        background-color: #B55239;
+        color: #fff;
+    }
+    .btn-delete:hover {
+        background-color: #8f3f2d;
+    }
+
+    .text-center {
+        text-align: center;
+        padding: 20px;
+        color: #888;
+        font-style: italic;
+    }
+</style>
+
+<div class="content">
+    <div class="content-header">
+        
+        <a href="{{ path('app_category_new') }}" class="btn-add">
+            <i class="fas fa-plus"></i> Add Category
+        </a>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 25%;">Name</th>
+                    <th style="width: 45%;">Description</th>
+                    <th style="width: 20%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td><strong>{{ category.name }}</strong></td>
+                    <td>
+                        {% if category.description %}
+                            {{ category.description|length > 120 ? category.description|slice(0, 120) ~ '...' : category.description }}
+                        {% else %}
+                            <em>No description</em>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_category_show', {'id': category.id}) }}" class="btn-view" title="View">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn-edit" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form method="post" action="{{ path('app_category_delete', {'id': category.id}) }}" onsubmit="return confirm('Are you sure you want to delete this category?');" style="display:inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                            <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No categories found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

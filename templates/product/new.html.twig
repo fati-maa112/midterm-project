@@ -1,0 +1,123 @@
+{% extends 'base_login.html.twig' %}
+
+{% block title %}Create New Product{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background: #fdf9f7;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 60px auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .form-container h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #7a8661; /* olive */
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    form div {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #555;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        background: #faf7f0;
+        font-size: 1rem;
+        transition: 0.3s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        border-color: #b79b7f; /* sand */
+        outline: none;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(183,155,127,0.2);
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        border-radius: 30px;
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+        background: #7a8661; /* olive */
+        color: #fff;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #5f6c4c;
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #b79b7f;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        color: #a98867;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Create New Product</h1>
+
+    {# ✅ enctype added so file uploads work #}
+   {{ form_start(form, { 'attr': { 'enctype': 'multipart/form-data' } }) }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.quantity) }}
+    {{ form_row(form.category) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.description) }}
+
+    {# Show current image if one exists #}
+    {% if product.image %}
+        <div class="current-image">
+            <p>Current Image:</p>
+            <img src="{{ asset('uploads/' ~ product.image) }}" alt="Product Image" 
+                 style="max-width: 150px; border-radius: 10px; margin-bottom: 10px;">
+        </div>
+    {% endif %}
+
+    {# Always show upload input so user can replace image #}
+    {{ form_row(form.image, { 'label': 'Upload New Image' }) }}
+
+    <button type="submit">Save</button>
+
+{{ form_end(form) }}
+
+
+    <a href="{{ path('app_product_index') }}" class="back-link">← Back to Products</a>
+</div>
+{% endblock %}

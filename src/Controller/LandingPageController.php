@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class LogInController extends AbstractController
+final class LandingPageController extends AbstractController
 {
-    #[Route('/log/in', name: 'app_log_in')]
+    #[Route('/landing/page', name: 'app_landing_page')]
     public function index(): Response
     {
-        return $this->render('log_in/index.html.twig', [
-            'controller_name' => 'LogInController',
+        return $this->render('landing_page/index.html.twig', [
+            'controller_name' => 'LandingPageController',
         ]);
     }
 }

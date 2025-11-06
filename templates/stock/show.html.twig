@@ -1,0 +1,82 @@
+{% extends 'base_login.html.twig' %}
+
+{% block title %}Stock Details{% endblock %}
+
+{% block body %}
+<style>
+    body { background: #fdf9f7; font-family: 'Poppins', sans-serif; color: #333; }
+
+    .stock-details {
+        max-width: 900px;
+        margin: 60px auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+    }
+
+    img {
+        width: 100%; border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .stock-info h1 {
+        font-size: 2rem; font-weight: 600; color: #7a8661; margin-bottom: 15px;
+    }
+
+    .stock-info p {
+        font-size: 1rem; color: #555; margin-bottom: 15px; line-height: 1.6;
+    }
+
+    .stock-quantity {
+        font-size: 1.2rem; font-weight: bold; color: #b79b7f; margin-bottom: 25px;
+    }
+
+    .actions {
+        display: flex; gap: 15px; flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 12px 24px; border-radius: 30px;
+        font-weight: 600; font-size: 0.95rem;
+        border: none; cursor: pointer;
+        text-decoration: none; transition: 0.3s;
+    }
+
+    .btn-back { background: #7a8661; color: #fff; }
+    .btn-back:hover { background: #5f6c4c; }
+
+    .btn-edit { background: #b79b7f; color: #fff; }
+    .btn-edit:hover { background: #a98867; }
+
+    .btn-delete { background: #c0392b; color: #fff; }
+    .btn-delete:hover { background: #922b21; }
+</style>
+
+<div class="stock-details">
+    <div class="stock-image">
+        {% if stock.image %}
+            <img src="{{ asset('uploads/' ~ stock.image) }}" alt="{{ stock.product.name }}">
+        {% else %}
+            <img src="https://via.placeholder.com/400x400?text=No+Image" alt="No Image">
+        {% endif %}
+    </div>
+
+    <div class="stock-info">
+        <h1>{{ stock.product.name }}</h1>
+        <div class="stock-quantity">Quantity: {{ stock.quantity }}</div>
+        <p><strong>Product:</strong> {{ stock.product.name }}</p>
+
+        <div class="actions">
+            <a href="{{ path('app_stock_index') }}" class="btn btn-back">← Back</a>
+            <a href="{{ path('app_stock_edit', {'id': stock.id}) }}" class="btn btn-edit">Edit</a>
+
+            <form method="post" action="{{ path('app_stock_delete', {'id': stock.id}) }}"
+                  onsubmit="return confirm('Are you sure you want to delete this stock entry?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stock.id) }}">
+                <button class="btn btn-delete">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

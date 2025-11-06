@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Category - Naturae Skincare{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background-color: #faf9f6;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 60px auto;
+        background: #ffffff;
+        padding: 40px 50px;
+        border-radius: 24px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+        text-align: center;
+        color: #6b7352;
+        font-size: 1.6rem;
+        margin-bottom: 35px;
+        font-weight: 600;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    label {
+        width: 130px;
+        font-weight: 500;
+        color: #4a4a4a;
+        text-align: right;
+        padding-top: 10px;
+    }
+
+    input, textarea {
+        flex: 1;
+        border: 1px solid #e2dfd8;
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: #fcfaf7;
+        font-size: 14px;
+        color: #333;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+        border-color: #7a8661;
+    }
+
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+
+    .btn {
+        border: none;
+        padding: 12px 32px;
+        border-radius: 32px;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        color: #fff;
+    }
+
+    .btn-back {
+        background-color: #b79b7f;
+    }
+    .btn-back:hover {
+        background-color: #a48a6d;
+    }
+
+    .btn-save {
+        background-color: #7a8661;
+    }
+    .btn-save:hover {
+        background-color: #65714f;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Edit Category</h1>
+
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+        </div>
+        <div class="btn-group">
+            <a href="{{ path('app_category_index') }}" class="btn btn-back">Back</a>
+            <button class="btn btn-save">Save</button>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
